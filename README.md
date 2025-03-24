@@ -40,6 +40,7 @@ Web tarayıcıları, **SOP (Same-Origin Policy) (Aynı Kaynak Politikası)** ad�
 
 ![](./assets/CORS.drawio.png
  "GitHub")
+
 **Aynı adreslere farklı kaynaklardan erişim**
 
 

@@ -156,3 +156,31 @@ Content-Type: application/json
 
 Not:
 Bazı istekler preflight  isteklerine ihtiyaç duymayabilir.
+
+
+## XSS (Cross-Site Scripting) Saldırıları
+
+XSS (Cross-Site Scripting), bir saldırganın, kullanıcılar tarafından görüntülenen bir web sayfasına zararlı JavaScript kodları enjekte etmesine denir
+
+Genellikle formlar, yorum kutuları, URL parametreleri veya yerel depolama alanları gibi kullanıcıların bilgi girişi yaptığı alanlara etki ederler.
+
+Genellikle bu açıkta kullanıcıların girdiği bilgilerin doğrulanması ve şifrelenmesi işlemleri  yapılmaz.
+
+
+#### XSS'in Genel Çalışma Prensibi:
+
+1.Saldırgan, zararlı bir JavaScript kodu gönderir
+
+2.Web uygulaması bu zararlı kodu uygun şekilde temizlemeden veya kodlamadan kullanıcının tarayıcısına yansıtır.
+
+3.Tarayıcı, gelen bu zararlı kodu çalıştırır ve saldırgan, hedeflenen kullanıcıyı etkiler.
+
+
+Temel olarak böyle çalışıyor.
+
+
+## XSS Türleri
+
+1.Reflected XSS
+
+Saldırganın zararlı JavaScript kodunu anlık olarak bir URL veya form verisi üzerinden yansıttığı saldırı türüdür.

@@ -254,4 +254,95 @@ HTML etiketleri arasında bulunan içerik. Örnek:
 DOM-based XSS Nedir?
 bir web uygulamasının istemci tarafındaki (client-side) JavaScript kodu üzerinden gerçekleştirilen bir XSS türüdür. Bu saldırı türü, sunucu tarafı ile doğrudan bir ilişkisi olmadığı için, yalnızca tarayıcıda gerçekleşir. Yani, sunucu zararlı kodu almaz veya geri göndermez. Verilerin DOM'a yerleştirilmesi sırasında zararlı JavaScript çalıştırılır. Bu tür XSS saldırılarını önlemek için veri doğrulama, temizleme ve güvenli JavaScript metodları kullanılmalıdır
 
+## SQL injection(SQLi)
+Bir saldırganın bir uygulamanın veritabanına yaptığı sorgularla etkileşimde bulunmasına olanak tanıyan bir web güvenlik açığıdır. Bu, bir saldırganın normalde erişemeyeceği verilere erişmesine izin verebilir. Bu, diğer kullanıcılara ait verileri veya uygulamanın erişebileceği diğer verileri içerebilir. Birçok durumda, bir saldırgan bu verileri değiştirebilir veya silebilir, bu da uygulamanın içeriğinde veya davranışında kalıcı değişikliklere neden olabilir.
 
+
+Bir kullanıcı, bir form üzerinden veri gönderdiğinde, eğer bu veri doğru şekilde filtrelenmezse, sorgunun içine sızabilir.
+
+
+SQL Injection Türleri:
+1. In-Band SQL Injection (Açık Kanal Üzerinden)
+2. Blind SQL Injection (Kör SQL Injection)
+
+ 
+
+**💣 A- In-band SQLi (aynı kanal üzerinden saldırı):**
+Bu en yaygın SQL Injection türüdür. Saldırgan, aynı kanal üzerinden hem saldırıyı gerçekleştirir hem de sonucu alır.
+
+
+* Error-based SQLi:Saldırgan, uygulamanın döndürdüğü hata mesajlarından yararlanarak veritabanı hakkında bilgi toplar.
+
+   ```SQL
+    SELECT * FROM users WHERE id = 1' 
+    ``` 
+
+Eğer sistem doğrudan SQL hatasını kullanıcıya gösteriyorsa, saldırgan tablo yapısını görebilir ve sorgularını buna göre oluşturabilir.
+
+
+* Union-based SQLi: UNION komutuyla farklı sorgular birleştirilir ve veriler çıkarılır.
+  
+```SQL
+SELECT username, password FROM users WHERE id = 1 UNION SELECT username, password FROM admin_users;
+``` 
+Örneğin, aşağıdaki sorgu saldırganın tüm kullanıcı adlarını ve şifrelerini almasını sağlar:
+
+
+**💣Blind SQLi (Kör SQLi):**
+
+Bu tür saldırılar doğrudan hata mesajı döndürmez.
+
+* **Boolean-based Blind SQLi**: Saldırgan, doğru veya yanlış koşullara dayalı sorgular yaparak sistemin verdiği yanıtları gözlemler.
+```SQL
+OR 1=1 --  
+```
+Örneğin, giriş formuna aşağıdaki ifadeler girildiğinde:
+
+
+* **Time-based Blind SQLi**: Sorgu, belirtilen bir süreyi beklerse doğru kabul edilir, aksi takdirde yanlış kabul edilir.
+
+Out-of-band SQLi (Farklı kanal üzerinden saldırı):
+
+Bu tür saldırılarda, saldırgan veritabanından çıkarılan veriler farklı bir kanal üzerinden gönderilir, örneğin DNS veya HTTP isteği.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## KAYNAKÇA
+
+[Medium](https://medium.com/@YunusEmreAlpu/cross-site-scripting-xss-nedir-77ffbd12e718)
+
+[Bulutistan](https://bulutistan.com/blog/xss-cross-site-scripting-nedir/)
+
+[Port Swinger](https://portswigger.net/web-security/cross-site-scripting)
+
+[Wikipedia](wwww.wikepedia.com)
+
+[Bergnet](https://berqnet.com/blog/xss-zafiyeti-cross-site-scripting)
+
+[NetsParker](https://medium.com/@hhuseyinuyar17/xss-zafiyeti-hakkında-98b5849d4700)
+
+[W3School](https://www.w3schools.com/js/js_htmldom.asp)

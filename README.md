@@ -230,7 +230,7 @@ HTML veya XML içeriğinin bir nesne hiyerarşisidir.
 
 DOM, sayfa üzerindeki her öğeyi (başlıklar, paragraflar, bağlantılar, resimler, formlar vb.) bir nesne (object) olarak temsil eder ve bu nesneler üzerinde işlemler yapabilmeyi  sağlar.
 
-# DOM'un Temel Yapısı
+### DOM'un Temel Yapıları
 
 Doküman (Document):HTML sayfası
 
@@ -250,3 +250,8 @@ HTML etiketleri arasında bulunan içerik. Örnek:
 
 ![](./assets/DOM.png
  "GitHub")
+
+DOM-based XSS Nedir?
+bir web uygulamasının istemci tarafındaki (client-side) JavaScript kodu üzerinden gerçekleştirilen bir XSS türüdür. Bu saldırı türü, sunucu tarafı ile doğrudan bir ilişkisi olmadığı için, yalnızca tarayıcıda gerçekleşir. Yani, sunucu zararlı kodu almaz veya geri göndermez. Verilerin DOM'a yerleştirilmesi sırasında zararlı JavaScript çalıştırılır. Bu tür XSS saldırılarını önlemek için veri doğrulama, temizleme ve güvenli JavaScript metodları kullanılmalıdır
+
+

@@ -38,7 +38,7 @@ Web tarayıcıları, **SOP (Same-Origin Policy) (Aynı Kaynak Politikası)** ad�
 
 İki origin’in aynı olabilmesi için protokol, domain ve port bilgilerinin aynı olması gerekir. Yani iki adres bilgisi aynı olduğunda, farklı port değerlerine sahiplerse **same-origin** olmazlar.
 
-![](./assets/CORS.drawio.png
+![photo by xBugOR](./assets/CORS.drawio.png
  "GitHub")
 
 **Aynı adreslere farklı kaynaklardan erişim**
@@ -160,7 +160,7 @@ Bazı istekler preflight  isteklerine ihtiyaç duymayabilir.
 
 ## XSS (Cross-Site Scripting) Saldırıları
 
-XSS (Cross-Site Scripting), bir saldırganın, kullanıcılar tarafından görüntülenen bir web sayfasına zararlı JavaScript kodları enjekte etmesine denir
+XSS (Cross-Site Scripting), bir saldırganın, kullanıcılar tarafından görüntülenen bir web sayfasına zararlı JavaScript kodları enjekte etmesine denir.
 
 Genellikle formlar, yorum kutuları, URL parametreleri veya yerel depolama alanları gibi kullanıcıların bilgi girişi yaptığı alanlara etki ederler.
 
@@ -180,7 +180,73 @@ Temel olarak böyle çalışıyor.
 
 
 ## XSS Türleri
-
-1.Reflected XSS
+### Reflected XSS
 
 Saldırganın zararlı JavaScript kodunu anlık olarak bir URL veya form verisi üzerinden yansıttığı saldırı türüdür.
+
+Kullanıcının girdiği veri direkt olarak kendisine geri döndürülür ve arka planda zararlı kodlar çalıştırılır.
+
+Depolanmaz.Kullanıcı özelinde çalışır ve zararlı linkler üzerinden yayılır.
+
+### Bu saldırı ile neler yapılabilir ?
+
+🔴Kullanıcının gerçekleştirebileceği herhangi bir eylemi uygulama içinde gerçekleştirmek. 
+
+🔴Kullanıcının görebileceği herhangi bir bilgiyi görüntülemek. 
+
+🔴Kullanıcının değiştirebileceği herhangi bir bilgiyi değiştirmek. 
+
+🔴İlk kurban kullanıcıdan geliyormuş gibi görünecek şekilde diğer uygulama kullanıcılarıyla etkileşim başlatmak, bu etkileşimler arasında kötü niyetli saldırılar da bulunabilir.
+
+🔴Keylogger ile Şifre Çalma: Kullanıcının klavye hareketlerini takip etme.
+
+🔴Phishing saldırıları(kimlik avı) için sahte giriş formları oluşturulabilir.
+
+### Stored XSS
+
+ Saldırganın zararlı javaScript kodunu veritabanına veya başka depolama birimine kaydetmesi sonucunda kodun sayfa içerisinde otomatik olarak çalışmasıdır.
+
+ Stored XSS ile Yapılabilecek Saldırılar
+
+🔴 Kullanıcı Hesaplarını Ele Geçirmek
+
+🔴 Admin Yetkilerini Ele Geçirmek
+
+🔴 Web Sitesini Manipüle Etmek
+
+Şu alanlara eklenebilirler:
+
+* bir blog yazısındaki yorumlar
+
+* bir sohbet odasındaki kullanıcı takma adları 
+
+* bir müşteri siparişindeki iletişim bilgileri.
+
+### DOM-based XSS
+
+Bu XSS türünü açıklamadan önce DOOM nedir bakalım:
+
+HTML veya XML içeriğinin bir nesne hiyerarşisidir.
+
+DOM, sayfa üzerindeki her öğeyi (başlıklar, paragraflar, bağlantılar, resimler, formlar vb.) bir nesne (object) olarak temsil eder ve bu nesneler üzerinde işlemler yapabilmeyi  sağlar.
+
+# DOM'un Temel Yapısı
+
+Doküman (Document):HTML sayfası
+
+
+Elementler (Elements)
+HTML etiketleri, sayfanın içeriğini temsil eder. Örnekler:
+(`<div>`,`<h1>`,`<p>`)
+
+Attributes (Öznitelikler)
+HTML etiketlerinin özelliklerini tanımlar. Örnekler:
+(`id`,`class`,`href`)
+
+
+Metin (Text)
+HTML etiketleri arasında bulunan içerik. Örnek:
+`<p> METİN  </p>`
+
+![](./assets/DOM.png
+ "GitHub")

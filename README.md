@@ -255,10 +255,21 @@ DOM-based XSS Nedir?
 bir web uygulamasının istemci tarafındaki (client-side) JavaScript kodu üzerinden gerçekleştirilen bir XSS türüdür. Bu saldırı türü, sunucu tarafı ile doğrudan bir ilişkisi olmadığı için, yalnızca tarayıcıda gerçekleşir. Yani, sunucu zararlı kodu almaz veya geri göndermez. Verilerin DOM'a yerleştirilmesi sırasında zararlı JavaScript çalıştırılır. Bu tür XSS saldırılarını önlemek için veri doğrulama, temizleme ve güvenli JavaScript metodları kullanılmalıdır
 
 ## SQL injection(SQLi)
-Bir saldırganın bir uygulamanın veritabanına yaptığı sorgularla etkileşimde bulunmasına olanak tanıyan bir web güvenlik açığıdır. Bu, bir saldırganın normalde erişemeyeceği verilere erişmesine izin verebilir. Bu, diğer kullanıcılara ait verileri veya uygulamanın erişebileceği diğer verileri içerebilir. Birçok durumda, bir saldırgan bu verileri değiştirebilir veya silebilir, bu da uygulamanın içeriğinde veya davranışında kalıcı değişikliklere neden olabilir.
+Bir saldırganın bir uygulamanın veritabanına yaptığı sorgularla etkileşimde bulunmasına olanak tanıyan bir web güvenlik açığıdır. Birçok durumda, bir saldırgan bu verileri değiştirebilir veya silebilir, bu da uygulamanın içeriğinde  davranışında  değişikliklere neden olabilir.
 
 
 Bir kullanıcı, bir form üzerinden veri gönderdiğinde, eğer bu veri doğru şekilde filtrelenmezse, sorgunun içine sızabilir.
+
+
+```SQL
+SELECT * FROM Users WHERE UserId = 105 OR 1=1;
+ ``` 
+1=1 her zaman true döneceği için bu tablodaki tüm bilgilere saldırgan erişebilir.
+```
+
+SELECT * FROM Users WHERE Name ="" or ""="" AND Pass ="" or ""=""
+```
+Ya da bu şekilde boşluk eşittir boşluk gibi.
 
 
 SQL Injection Türleri:
@@ -267,20 +278,24 @@ SQL Injection Türleri:
 
  
 
-**💣 A- In-band SQLi (aynı kanal üzerinden saldırı):**
+## **💣 A- In-band SQLi (aynı kanal üzerinden saldırı):**
 Bu en yaygın SQL Injection türüdür. Saldırgan, aynı kanal üzerinden hem saldırıyı gerçekleştirir hem de sonucu alır.
 
 
-* Error-based SQLi:Saldırgan, uygulamanın döndürdüğü hata mesajlarından yararlanarak veritabanı hakkında bilgi toplar.
+📌 **Error-based SQLi**:Saldırgan, uygulamanın döndürdüğü hata mesajlarından yararlanarak veritabanı hakkında bilgi toplar.
 
-   ```SQL
-    SELECT * FROM users WHERE id = 1' 
-    ``` 
+```SQL
+SELECT * FROM users WHERE id = 1' 
+``` 
 
 Eğer sistem doğrudan SQL hatasını kullanıcıya gösteriyorsa, saldırgan tablo yapısını görebilir ve sorgularını buna göre oluşturabilir.
 
+Kısaca: Saldırgan, uygulamanın döndürdüğü hata mesajlarını kullanarak veritabanı hakkında bilgi toplar.
 
-* Union-based SQLi: UNION komutuyla farklı sorgular birleştirilir ve veriler çıkarılır.
+
+
+
+📌**Union-based SQLi**: UNION komutuyla farklı sorgular birleştirilir ve veriler çıkarılır.
   
 ```SQL
 SELECT username, password FROM users WHERE id = 1 UNION SELECT username, password FROM admin_users;
@@ -288,34 +303,51 @@ SELECT username, password FROM users WHERE id = 1 UNION SELECT username, passwor
 Örneğin, aşağıdaki sorgu saldırganın tüm kullanıcı adlarını ve şifrelerini almasını sağlar:
 
 
-**💣Blind SQLi (Kör SQLi):**
+## **💣Blind SQLi (Kör SQLi):**
 
 Bu tür saldırılar doğrudan hata mesajı döndürmez.
 
-* **Boolean-based Blind SQLi**: Saldırgan, doğru veya yanlış koşullara dayalı sorgular yaparak sistemin verdiği yanıtları gözlemler.
+📌  **Boolean-based Blind SQLi**: Saldırgan, doğru veya yanlış koşullara dayalı sorgular yaparak sistemin verdiği yanıtları gözlemler.
 ```SQL
-OR 1=1 --  
+ AND 1=1 --  /* Doğruysa sayfa normal yüklenir */
+ AND 1=2 --  /* Yanlışsa sayfa farklı yanıt verir */
 ```
-Örneğin, giriş formuna aşağıdaki ifadeler girildiğinde:
-
-
-* **Time-based Blind SQLi**: Sorgu, belirtilen bir süreyi beklerse doğru kabul edilir, aksi takdirde yanlış kabul edilir.
-
-Out-of-band SQLi (Farklı kanal üzerinden saldırı):
-
-Bu tür saldırılarda, saldırgan veritabanından çıkarılan veriler farklı bir kanal üzerinden gönderilir, örneğin DNS veya HTTP isteği.
+Eğer ilk sorguda sayfa normal açılıyorsa ama ikinci sorguda hata veriyorsa, bu SQL Injection’a açık olduğunu gösterir.
 
 
 
+📌  **Time-based Blind SQLi**: Sorgu, belirtilen bir süreyi beklerse doğru kabul edilir, aksi takdirde yanlış kabul edilir.
 
 
+SQL sorguları genellikle uygulama tarafından senkronize bir şekilde işlendiğinden, bir SQL sorgusunun yürütülmesini geciktirmek, HTTP yanıtını da geciktirir. Bu, HTTP yanıtını almak için geçen süreye dayanarak enjekte edilen koşulun doğruluğunu belirlemenizi sağlar.
+
+Kısaca: Sunucu hata mesajı göstermese bile, sorgu yanıt süresi üzerinden veri sızdırılabilir.Sayfanın normalden daha geç yüklenmesi, saldırganın sorgusunun çalıştığını gösterir.
+```SQL
+ OR IF(1=1, SLEEP(5), 0) --  
+```
+Eğer sayfa 5 saniye boyunca bekledikten sonra açılıyorsa, saldırgan sorgusunun çalıştığını anlar.
+
+## **💣Out-of-band SQLi (Farklı kanal üzerinden saldırı)**
+
+Veritabanından çıkarılan verilerin farklı bir kanal üzerinden saldırgana gönderildiği SQL Injection türüdür.
+
+Hata türü göstermeyen ve süreden veritabanı hakkında bilgi çıkarılmadığı zaman kullanılır.
+
+DNS,HTTP ve FTP gibi farklı kanallar üzerinden aktarım yapılır.
 
 
+Bu tür saldırıların başarılı olabilmesi için, uygulamanın ve veritabanının harici bir sunucuya veri gönderme yeteneği olması gerekir.
+
+Eğer saldırgan veritabanı sunucusunu dışarıya veri gönderecek şekilde manipüle edebilirse, veritabanından alınan hassas bilgiler dışarıya sızdırılabilir.
 
 
+### Bu saldırılardan korunma
 
+- Hazırlanmış sorgular kullanmak,
 
+- Güçlü erişim kontrolleri ve dış bağlantıları engellemek,
 
+- Firewall kullanmak OOB SQLi'yi engellemek için en etkili yöntemlerdir.
 
 
 
@@ -346,3 +378,9 @@ Bu tür saldırılarda, saldırgan veritabanından çıkarılan veriler farklı 
 [NetsParker](https://medium.com/@hhuseyinuyar17/xss-zafiyeti-hakkında-98b5849d4700)
 
 [W3School](https://www.w3schools.com/js/js_htmldom.asp)
+
+[Port Swinger SQLi](https://portswigger.net/web-security/sql-injection/blind)
+
+[imperva SQLi](https://www.imperva.com/learn/application-security/sql-injection-sqli/)
+
+[w3schools SQLi](https://www.w3schools.com/sql/sql_injection.asp)

@@ -350,17 +350,28 @@ Eğer saldırgan veritabanı sunucusunu dışarıya veri gönderecek şekilde ma
 - Firewall kullanmak OOB SQLi'yi engellemek için en etkili yöntemlerdir.
 
 
+## Cross-Site Request Forgery (CSRF):
+
+ Cross-Site Request Forgery (CSRF), bir web uygulamasında kullanıcının kimlik doğrulama bilgilerini kötüye kullanarak, kullanıcı adına istenmeyen işlemler gerçekleştiren bir saldırı türüdür. CSRF saldırıları, genellikle kullanıcının oturumu açıkken ve kimlik doğrulaması yapıldıktan sonra gerçekleşir. Bu tür saldırılar, kullanıcının bilerek veya bilmeyerek zararlı bir işlem yapmasına yol açabilir.
+
+ Örneğin, bu, kullanıcının hesabındaki e-posta adresini değiştirmek, şifresini değiştirmek veya para transferi yapmak olabilir. Eylemin niteliğine bağlı olarak, saldırgan kullanıcının hesabı üzerinde tam kontrol elde edebilir. Eğer tehlikeye atılan kullanıcı uygulama içinde ayrıcalıklı bir role sahipse, o zaman saldırgan uygulamanın tüm verileri ve işlevselliği üzerinde tam kontrol elde edebilir.
+
+**CSRF Saldırısının Çalışma Prensibi**:
+
+Kullanıcı bir sosyal medya platformu veya online bankacılık gibi bir siteye giriş yapmış ve oturum açmış bir kullanıcı, web tarayıcısında açık oturumla dolaşmaktadır.
+
+Saldırgan, kurbanın ziyaret etmesi için bir bağlantı veya kötü amaçlı bir HTML formu hazırlar. Bu form, kurbanın oturumu açıkken, zararlı bir işlem yapacak şekilde hazırlanmıştır.
+
+Kullanıcı, Kötü Niyetli Sayfayı Ziyaret Eder.Bu ziyaret sırasında, kullanıcının tarayıcısı, daha önce oturum açtığı web sitesinin çerezini otomatik olarak gönderir.
+
+Web uygulaması işlemi onaylar. Web uygulaması, gelen isteği geçerli bir istek olarak kabul eder, çünkü kullanıcının oturumu zaten açık ve kimliği doğrulanmış durumdadır. Bu sebeple, uygulama güvenlik kontrollerini atlar ve isteği uygular.
 
 
-
-
-
-
-
-
-
-
-
+| **CSRF Koruması**       |  **XSS Koruması**|**SQL Injection Koruması**|
+|---------------------------|-------------|-----------------------|
+| Token Kullanımı: Her form veya istek için sunucudan alınan benzersiz bir token eklenmeli. Sunucu, gelen istekteki tokeni doğrulamalı.|Girdi Doğrulama ve Temizleme: Kullanıcı girdileri filtrelenmeli ve HTML/JavaScript gibi zararlı kodlar temizlenmeli.|Hazırlıklı Sorgular (Prepared Statements): Kullanıcı girdileri SQL sorgularına doğrudan eklenmemeli, yerine parametre bağlama (bindParam(), bindValue()) gibi yöntemler kullanılmalı.
+| **SameSite Çerez Politikası**  Çerezlerin sadece aynı site içinde çalışmasını sağlama. |Escape İşlemi: HTML çıktıları htmlspecialchars() veya e() gibi fonksiyonlarla kaçırılmalı.|ORM Kullanımı: Laravel gibi framework’lerde Eloquent gibi ORM araçları kullanarak güvenli veri çekme işlemleri yapılmalı.|
+| Origin başlıklarını kontrol et ve yalnızca güvenilir kaynaklardan gelen istekleri kabul et.|CSP (Content Security Policy) kullanarak yalnızca güvenilir kaynaklardan script çalıştırılmasını sağla|WHERE gibi sorguları dinamik olarak kullanıcıdan almaktan kaçın.|
 
 
 ## KAYNAKÇA
@@ -384,3 +395,5 @@ Eğer saldırgan veritabanı sunucusunu dışarıya veri gönderecek şekilde ma
 [imperva SQLi](https://www.imperva.com/learn/application-security/sql-injection-sqli/)
 
 [w3schools SQLi](https://www.w3schools.com/sql/sql_injection.asp)
+
+[Port Swinger CSRF](https://portswigger.net/web-security/csrf)

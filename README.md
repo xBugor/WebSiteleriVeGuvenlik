@@ -377,7 +377,13 @@ Web uygulaması işlemi onaylar. Web uygulaması, gelen isteği geçerli bir ist
 
 ## Authentication (Kimlik Doğrulama) Nedir?
 
-Kullanıcının iddia ettiği kişi olup olmadığının kanıtlanması.
+Kullanıcının iddia ettiği kişi olup olmadığının kanıtlanması. Genel olarak bir websitemizde kullanabileceğimiz 3 çeşit Authentication yöntemi mevcuttur:
+
+* Something you know
+* Something you have
+* Something you are or do
+
+Her birini açıklayarak yazımıza devam edelim.
 
 ### Authentication Yöntemleri
 
@@ -387,7 +393,7 @@ Kullanıcının iddia ettiği kişi olup olmadığının kanıtlanması.
 
 Örnekler:
 
-* vKullanıcı adı ve şifre
+* Kullanıcı adı ve şifre
 
 * PIN kodu
 
@@ -496,7 +502,92 @@ Kullanıcı oturum açtıktan sonra bile sürekli olarak kimlik doğrulaması ya
 
 
 
+🔹 Authentication (Kimlik Doğrulama): "Sen kimsin?"
 
+🔹 Authorization (Yetkilendirme): "Ne yapmana izin var?"
+
+## Authorization (Yetkilendirme) Nedir?
+Authorization (Yetkilendirme), kimliği doğrulanan bir kullanıcının belirli kaynaklara veya işlemlere erişim yetkisinin olup olmadığını belirleme sürecidir.
+
+
+### Authorization Yöntemleri
+1. **Rol Tabanlı Erişim Kontrolü (RBAC - Role-Based Access Control)**
+
+* Kullanıcılar belirli roller ile gruplandırılır.
+
+* Yetkilendirme, bu rollere göre belirlenir.
+
+* Örnek:
+
+      Admin → Kullanıcı yönetimi, veri düzenleme
+      Editor → İçerik ekleme, düzenleme
+      User → İçeriği sadece görüntüleme
+
+  Avantajlar:
+
+  ✔ Kolay yönetilebilir.
+
+   ✔ Kullanıcı sayısı arttıkça yönetim kolaylığı sağlar.
+
+🔴 Dezavantajlar:
+
+❌ Esnek değildir; İşler karmaşıklaştıkça yetersiz kalıyor.
+
+
+2. **Yetki Tabanlı Erişim Kontrolü (PBAC - Permission-Based Access Control)**
+
+Bu, kaynaklara erişimi politikalara göre yöneten bir güvenlik modelidir.
+
+Rol Tabanlı Erişim Kontrolü'nün (RBAC) roller üzerine odaklanmasının aksine, PBAC, aşağıdakiler gibi çeşitli nitelikleri dikkate alabilen politikalar kullanır:
+
+* Kullanıcı nitelikleri (ör. iş unvanı, konum)
+* Kaynak nitelikleri (ör. dosya türü, hassasiyet)
+* Çevresel nitelikler (ör. günün saati, ağ konumu)
+
+PBAC, erişim kontrolünde daha fazla esneklik ve ayrıntı düzeyi sunar.
+
+![alt text](./assets/Autherization.PNG
+ "GitHub")
+
+Örneğin:
+
+Politika 1: Bir kullanıcı yalnızca HR departmanı çalışanıysa personel bilgilerine erişebilir.
+
+Politika 2: Sadece yöneticiler belirli finansal verilere erişebilir.
+
+Politika 3: Mesai saatleri dışında herhangi bir kullanıcı sistem erişimi sağlayamaz.
+
+
+**Öznitelik Tabanlı Erişim Kontrolü (Attribute-Based Access Control (ABAC))**
+
+ Bu modelde, kullanıcılara, kaynaklara ve hatta erişim talebine (örneğin zaman, yer, işlem türü) dayalı olarak erişim izni verilir. ABAC, çok daha esnek ve dinamik bir yetkilendirme sağlar çünkü erişim kararları, yalnızca kullanıcının rolü veya kimliği değil, birçok faktöre dayanarak alınır.
+
+  Bu öznitelikler, kullanıcının kimliği, rolü, departmanı, çalıştığı saat, kaynağın türü ve güvenlik seviyesi, hatta çevresel faktörler (örneğin kullanıcı IP adresi veya lokasyonu) gibi bilgiler olabilir.
+
+  Bileşenler:
+* Kullanıcı Öznitelikleri: Kullanıcıyla ilgili bilgiler (örneğin, rol, departman, güvenlik seviyesi, yaş, konum).
+
+* Kaynak Öznitelikleri: Erişilmeye çalışılan kaynakla ilgili bilgiler (örneğin, dosyanın türü, güvenlik seviyesi, sahibi).
+
+* Erişim Talebi Öznitelikleri: Erişim talebinin bağlamı ile ilgili bilgiler (örneğin, saat, tarih, IP adresi, cihaz türü).
+
+* Politikalar: Erişim iznini tanımlayan kurallar. Bu kurallar genellikle kullanıcının ve kaynağın özniteliklerine dayalıdır.
+
+**Zorunlu Erişim Kontrolü (MAC - Mandatory Access Control)**
+
+
+MAC (Mandatory Access Control), sistemdeki erişim kurallarının zorunlu olarak uygulandığı bir modeldir. Kullanıcılar ve gruplar, yalnızca belirli kurallara ve politikalarla erişim izni alır. Bu genellikle yüksek güvenlikli sistemlerde, örneğin askeri veya hükümet sistemlerinde kullanılır.Merkezi bir otoritenin yönlendirmesi altında sistemin kendisi verir.
+
+Gizlilik Seviyeleri: "Halka Açık", "Sınırlı", "Özel", "Çok Gizli" gibi seviyeler vardır.
+
+
+
+
+
+----
+Örneğin, kimlik doğrulama, bugra123 kullanıcı adıyla bir web sitesine erişmeye çalışan birinin gerçekten hesabı oluşturan kişi olup olmadığını belirler.
+
+bugra123 kimlik doğrulandıktan sonra, izinleri neyi yapma yetkisine sahip olduğunu belirler. Örneğin, diğer kullanıcılar hakkında kişisel bilgilere erişim iznine sahip olabilir veya başka bir kullanıcının hesabını silme gibi işlemleri gerçekleştirebilir.
 
 
 ## KAYNAKÇA
@@ -522,3 +613,9 @@ Kullanıcı oturum açtıktan sonra bile sürekli olarak kimlik doğrulaması ya
 [w3schools SQLi](https://www.w3schools.com/sql/sql_injection.asp)
 
 [Port Swinger CSRF](https://portswigger.net/web-security/csrf)
+
+[Port Swinger authentication ](https://portswigger.net/web-security/authentication)
+
+[frontegg.com](https://frontegg.com/guides/authorization-a-complete-guide)
+
+[nextlabs pbca](https://www.nextlabs.com/products/cloudaz-policy-platform/what-is-policy-based-access-control-pbac/)

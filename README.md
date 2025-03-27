@@ -374,6 +374,131 @@ Web uygulaması işlemi onaylar. Web uygulaması, gelen isteği geçerli bir ist
 | Origin başlıklarını kontrol et ve yalnızca güvenilir kaynaklardan gelen istekleri kabul et.|CSP (Content Security Policy) kullanarak yalnızca güvenilir kaynaklardan script çalıştırılmasını sağla|WHERE gibi sorguları dinamik olarak kullanıcıdan almaktan kaçın.|
 
 
+
+## Authentication (Kimlik Doğrulama) Nedir?
+
+Kullanıcının iddia ettiği kişi olup olmadığının kanıtlanması.
+
+### Authentication Yöntemleri
+
+1. **Bilgiye Dayalı Kimlik Doğrulama (Something You Know)**
+
+   Kullanıcının bildiği bir bilgiyle yapılan doğrulamadır.
+
+Örnekler:
+
+* vKullanıcı adı ve şifre
+
+* PIN kodu
+
+* Gizli güvenlik soruları
+
+🔴 Zayıf Noktalar:
+
+Şifrenin unutulması,sosyal mühendislikle şifrelerimizi ele geçirebilirler.
+
+
+2. **Sahipliğe Dayalı Kimlik Doğrulama (Something You Have)**
+
+   Kullanıcının fiziksel olarak sahip olduğu bir şey ile yapılan doğrulamadır.
+
+Örnekler:
+
+* SMS veya e-posta ile doğrulama kodu
+
+* Güvenlik anahtarları 
+
+🔴 Zayıf Noktalar:
+
+Telefon veya güvenlik cihazı çalınabilir.
+
+SIM kart dolandırıcılığı (SIM Swap) ile SMS kodları ele geçirilebilir.
+
+3. **Biyometrik Kimlik Doğrulama (Something You Are)**
+
+Kullanıcının fiziksel özellikleri ile yapılan doğrulamadır.
+
+Örnekler:
+
+* Parmak izi
+
+* Yüz tanıma
+
+* Retina veya iris taraması
+
+* Ses tanıma
+
+
+
+🔴
+Zayıf Noktalar:
+
+Yüksek maliyetli olabilir.
+
+Yanlış pozitif veya yanlış negatif sonuçlar çıkabilir.
+
+Verilerin çalınması durumunda geri alınamaz (şifre değiştirilebilir ama parmak izi değiştirilemez).
+
+
+4. Davranışsal Kimlik Doğrulama (Something You Do)
+Kullanıcının belirli bir eylemi nasıl yaptığına dayalı kimlik doğrulama türüdür.
+
+Örnekler:
+
+* Klavye yazım hızı ve ritmi
+
+* Dokunmatik ekranda kaydırma hareketleri
+
+* Fare hareketleri
+
+🔴 Zayıf Noktalar:
+
+Hassas cihazlara ihtiyaç duyabilir.
+
+Kullanıcıların davranışları zamanla değişebilir.
+
+Çok Faktörlü Kimlik Doğrulama (MFA - Multi-Factor Authentication)
+MFA, birden fazla doğrulama yöntemi kullanarak güvenliği artırır.
+
+2FA (İki Faktörlü Kimlik Doğrulama), en yaygın MFA yöntemidir.
+
+Örnek:
+
+Kullanıcı adı + Şifre (Bilgi)
+
+SMS ile gelen kod (Sahiplik)
+
+📌 En güvenli MFA kombinasyonu:
+
+Şifre + OTP (Google Authenticator, Authy, Microsoft Authenticator gibi uygulamalar)
+
+Şifre + Donanım Güvenlik Anahtarı (YubiKey gibi)
+
+## Kimlik Doğrulama Türleri
+
+1. Tek Aşamalı Kimlik Doğrulama (Single-Factor Authentication - SFA)
+Sadece tek bir doğrulama yöntemi kullanılır.
+
+Örnek: Kullanıcı adı ve şifre ile giriş yapmak.
+🔴 Riskli! Kolayca ele geçirilebilir.
+
+2. Çift Aşamalı Kimlik Doğrulama (Two-Factor Authentication - 2FA)
+İki farklı doğrulama faktörü kullanılır.
+
+Örnek: Şifre + SMS kodu.
+✅ Daha güvenli.
+
+3. Sürekli Kimlik Doğrulama (Continuous Authentication)
+Kullanıcı oturum açtıktan sonra bile sürekli olarak kimlik doğrulaması yapılır.
+
+Örnek: Kullanıcının yüzü veya sesi sürekli analiz edilir.
+✅ Daha güvenli ama kaynak tüketimi fazla.
+
+
+
+
+
+
 ## KAYNAKÇA
 
 [Medium](https://medium.com/@YunusEmreAlpu/cross-site-scripting-xss-nedir-77ffbd12e718)

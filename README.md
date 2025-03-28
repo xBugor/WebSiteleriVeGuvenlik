@@ -597,8 +597,45 @@ Muhtemelen sosyal medya hesabınızı kullanarak giriş yapmanıza izin veren si
 
 * Kullanıcı şifresini doğrudan paylaşmaz, bunun yerine Access Token kullanılır.
 
-Detaylı bilgi için [Ouath]()
+OpenID
+OpenID, kullanıcıların kimlik doğrulaması yapmak için kullanılan bir açık standarttır.
+
+OAuth 2.0 ile birlikte çalışır.
+
+OpenID, genellikle tek oturum açma ve kimlik doğrulama işlemleri için kullanılır.
+
+
+
+Detaylı bilgi için [Ouath ve OpenID makalem](https://github.com/xBugor/OauthAndOpenID)
 ## KAYNAKÇA
+
+
+## Queue&Job
+
+Queue (Kuyruk)
+ kuyruk, işlemlerin sıralı bir şekilde yapılmasını sağlar. Kuyruğa bir iş (job) eklendiğinde, o iş bir sonraki uygun zaman geldiğinde işlenir. Bu, zaman alıcı işlemlerin kullanıcı etkileşimi sırasında engellenmeden yapılmasını sağlar. Kuyruklar, özellikle e-posta gönderme, veri işleme, bildirim gönderme gibi işlemleri arka planda yaparken kullanılabilir.
+
+Kuyruk Kullanımının Avantajları:
+Zaman alıcı işlemleri arka planda yapma: Kullanıcıların hızlı yanıt almasını sağlar.
+
+İş yükünü dağıtma: Kuyruklar, işlemleri farklı işçiler (workers) arasında dağıtarak verimli hale gelir.
+
+İşlerin sırasıyla yapılması: Kuyrukta işler sırasıyla işlenir, yani bir iş tamamlanmadan diğerine geçilmez.
+
+Job (İş)
+Bir Job, bir kuyruğa eklenen bir işlem veya görev anlamına gelir. Kuyruğa eklenen her iş bir Job'dur. Örneğin, bir e-posta göndermek, bir dosya yüklemek veya bir veri tabanı işlemi yapmak birer Job olabilir. Job'lar, kuyrukta bekleyen işlemleri temsil eder ve işçi (worker) tarafından işlenir.
+
+Job Özellikleri:
+İşin tanımlanması: Bir job, yapılacak işlemi tanımlar. Örneğin, "E-posta gönder" bir job olabilir.
+
+Bir kuyruğa eklenmesi: Job'lar, kuyruklar aracılığıyla zamanlanır ve işlenir.
+
+Arka planda çalışması: Kuyrukta işleme alınan job'lar, arka planda çalışır ve kullanıcının etkileşimine engel olmaz.
+
+
+
+
+
 
 [Medium](https://medium.com/@YunusEmreAlpu/cross-site-scripting-xss-nedir-77ffbd12e718)
 

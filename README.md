@@ -607,7 +607,6 @@ OpenID, genellikle tek oturum açma ve kimlik doğrulama işlemleri için kullan
 
 
 Detaylı bilgi için [Ouath ve OpenID makalem](https://github.com/xBugor/OauthAndOpenID)
-## KAYNAKÇA
 
 
 ## Queue&Job
@@ -633,6 +632,7 @@ Bir kuyruğa eklenmesi: Job'lar, kuyruklar aracılığıyla zamanlanır ve işle
 Arka planda çalışması: Kuyrukta işleme alınan job'lar, arka planda çalışır ve kullanıcının etkileşimine engel olmaz.
 
 
+## KAYNAKÇA
 
 
 

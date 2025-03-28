@@ -573,23 +573,31 @@ Politika 3: Mesai saatleri dışında herhangi bir kullanıcı sistem erişimi s
 
 * Politikalar: Erişim iznini tanımlayan kurallar. Bu kurallar genellikle kullanıcının ve kaynağın özniteliklerine dayalıdır.
 
-**Zorunlu Erişim Kontrolü (MAC - Mandatory Access Control)**
+3. **Zorunlu Erişim Kontrolü (MAC - Mandatory Access Control)**
 
 
 MAC (Mandatory Access Control), sistemdeki erişim kurallarının zorunlu olarak uygulandığı bir modeldir. Kullanıcılar ve gruplar, yalnızca belirli kurallara ve politikalarla erişim izni alır. Bu genellikle yüksek güvenlikli sistemlerde, örneğin askeri veya hükümet sistemlerinde kullanılır.Merkezi bir otoritenin yönlendirmesi altında sistemin kendisi verir.
 
 Gizlilik Seviyeleri: "Halka Açık", "Sınırlı", "Özel", "Çok Gizli" gibi seviyeler vardır.
 
-
-
-
-
 ----
 Örneğin, kimlik doğrulama, bugra123 kullanıcı adıyla bir web sitesine erişmeye çalışan birinin gerçekten hesabı oluşturan kişi olup olmadığını belirler.
 
 bugra123 kimlik doğrulandıktan sonra, izinleri neyi yapma yetkisine sahip olduğunu belirler. Örneğin, diğer kullanıcılar hakkında kişisel bilgilere erişim iznine sahip olabilir veya başka bir kullanıcının hesabını silme gibi işlemleri gerçekleştirebilir.
 
+# Oauth
 
+Muhtemelen sosyal medya hesabınızı kullanarak giriş yapmanıza izin veren sitelerle karşılaşmışsınızdır. Bu özelliğin,  OAuth 2.0  kullanılarak oluşturulmuş olma ihtimali yüksektir.
+
+* web sitelerinin ve web uygulamalarının başka bir uygulamadaki bir kullanıcının hesabına sınırlı erişim talep etmesini sağlayan yaygın olarak kullanılan bir yetkilendirme çerçevesidir. 
+
+*  kullanıcı adı ve şifre paylaşmadan bir uygulamanın başka bir uygulamaya güvenli bir şekilde erişim izni vermesini sağlayan yetkilendirme protokolüdür.
+
+* Örneğin, "Google ile Giriş Yap" veya "Discord ile Bağlan" gibi işlemler OAuth 2.0 ile gerçekleştirilir.
+
+* Kullanıcı şifresini doğrudan paylaşmaz, bunun yerine Access Token kullanılır.
+
+Detaylı bilgi için [Ouath]()
 ## KAYNAKÇA
 
 [Medium](https://medium.com/@YunusEmreAlpu/cross-site-scripting-xss-nedir-77ffbd12e718)

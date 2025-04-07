@@ -301,7 +301,6 @@ Kısaca: Saldırgan, uygulamanın döndürdüğü hata mesajlarını kullanarak 
 ```SQL
 SELECT username, password FROM users WHERE id = 1 UNION SELECT username, password FROM admin_users;
 ``` 
-Örneğin, aşağıdaki sorgu saldırganın tüm kullanıcı adlarını ve şifrelerini almasını sağlar:
 
 
 ## **💣Blind SQLi (Kör SQLi):**
@@ -329,6 +328,7 @@ Kısaca: Sunucu hata mesajı göstermese bile, sorgu yanıt süresi üzerinden v
 Eğer sayfa 5 saniye boyunca bekledikten sonra açılıyorsa, saldırgan sorgusunun çalıştığını anlar.
 
 ## **💣Out-of-band SQLi (Farklı kanal üzerinden saldırı)**
+Out-of-Band SQLi, saldırganın veritabanına bir sorgu gönderip cevabı doğrudan göremediği, ama cevabın başka bir kanal üzerinden (out-of-band) geri geldiği bir SQL enjeksiyon türüdür.
 
 Veritabanından çıkarılan verilerin farklı bir kanal üzerinden saldırgana gönderildiği SQL Injection türüdür.
 
@@ -375,6 +375,43 @@ Web uygulaması işlemi onaylar. Web uygulaması, gelen isteği geçerli bir ist
 | Origin başlıklarını kontrol et ve yalnızca güvenilir kaynaklardan gelen istekleri kabul et.|CSP (Content Security Policy) kullanarak yalnızca güvenilir kaynaklardan script çalıştırılmasını sağla|WHERE gibi sorguları dinamik olarak kullanıcıdan almaktan kaçın.|
 
 
+CSP, tarayıcılara “şu kaynaklardan içerik yükleyebilirsin, diğerlerinden yükleyemezsin” diyen bir güvenlik mekanizmasıdır.
+
+escape işlemi:kullanıcıdan gelen verileri ekrana basmadan önce zararsız hale getirmektir.Yani HTML, JavaScript gibi dillerin özel karakterlerinin anlamlarını yok ederiz.
+Örnek:
+Birisi şu kodu bir form alanına yazar:
+
+```script 
+<script>alert('hacklendin');</script>
+```
+Ve eğer sen bunu doğrudan HTML'e bastığında escape etmezsen, bu kod çalışır.
+
+php için 
+
+```html
+echo htmlspecialchars($userInput, ENT_QUOTES, 'UTF-8');
+```
+veya laravel gibi frameworklerde otamatik olarak e() fonksiyonu kullanılır.
+```html
+
+{{ $userInput }} 
+```
+Bu sayede <, >, " gibi özel anlamı olan karekterlerin görünüşü değişir.
+
+Yani:
+```html
+
+<script>alert("x")</script>
+```
+buna dönüşür
+```html
+
+&lt;script&gt;alert(&quot;x&quot;)&lt;/script&gt;
+
+```
+Yani tarayıcı onu kod olarak değil, sadece yazı olarak gösterir.
+
+
 
 ## Authentication (Kimlik Doğrulama) Nedir?
 
@@ -402,24 +439,29 @@ Her birini açıklayarak yazımıza devam edelim.
 
 🔴 Zayıf Noktalar:
 
-Şifrenin unutulması,sosyal mühendislikle şifrelerimizi ele geçirebilirler.
+* Şifrenin unutulması
+
+* sosyal mühendislikle şifrelerimizi ele geçirebilirler.
 
 
 2. **Sahipliğe Dayalı Kimlik Doğrulama (Something You Have)**
 
    Kullanıcının fiziksel olarak sahip olduğu bir şey ile yapılan doğrulamadır.
+Yani sistem sana şunu der:
+“Senin kim olduğunu, elindeki  özel şeyle kanıtla.”
 
 Örnekler:
 
 * SMS veya e-posta ile doğrulama kodu
-
 * Güvenlik anahtarları 
+*  USB güvenlik anahtarı (yubikey vs.)
+* Authenticator uygulaması (Google Authenticator, Authy vb.)
 
 🔴 Zayıf Noktalar:
 
-Telefon veya güvenlik cihazı çalınabilir.
+* Telefon veya güvenlik cihazı çalınabilir.
 
-SIM kart dolandırıcılığı (SIM Swap) ile SMS kodları ele geçirilebilir.
+* SIM kart dolandırıcılığı (SIM Swap) ile SMS kodları ele geçirilebilir.
 
 3. **Biyometrik Kimlik Doğrulama (Something You Are)**
 
@@ -440,14 +482,15 @@ Kullanıcının fiziksel özellikleri ile yapılan doğrulamadır.
 🔴
 Zayıf Noktalar:
 
-Yüksek maliyetli olabilir.
+* Yüksek maliyetli olabilir.
 
-Yanlış pozitif veya yanlış negatif sonuçlar çıkabilir.
+* Yanlış pozitif veya yanlış negatif sonuçlar çıkabilir.
 
-Verilerin çalınması durumunda geri alınamaz (şifre değiştirilebilir ama parmak izi değiştirilemez).
+* Verilerin çalınması durumunda geri alınamaz (şifre değiştirilebilir ama parmak izi değiştirilemez).
 
 
-4. Davranışsal Kimlik Doğrulama (Something You Do)
+4. **Davranışsal Kimlik Doğrulama (Something You Do)**
+
 Kullanıcının belirli bir eylemi nasıl yaptığına dayalı kimlik doğrulama türüdür.
 
 Örnekler:
@@ -486,13 +529,13 @@ SMS ile gelen kod (Sahiplik)
 1. Tek Aşamalı Kimlik Doğrulama (Single-Factor Authentication - SFA)
 Sadece tek bir doğrulama yöntemi kullanılır.
 
-Örnek: Kullanıcı adı ve şifre ile giriş yapmak.
+**Örnek**: Kullanıcı adı ve şifre ile giriş yapmak.
 🔴 Riskli! Kolayca ele geçirilebilir.
 
 2. Çift Aşamalı Kimlik Doğrulama (Two-Factor Authentication - 2FA)
 İki farklı doğrulama faktörü kullanılır.
 
-Örnek: Şifre + SMS kodu.
+**Örnek**: Şifre + SMS kodu.
 ✅ Daha güvenli.
 
 3. Sürekli Kimlik Doğrulama (Continuous Authentication)
@@ -552,7 +595,7 @@ PBAC, erişim kontrolünde daha fazla esneklik ve ayrıntı düzeyi sunar.
 
 Örneğin:
 
-Politika 1: Bir kullanıcı yalnızca HR departmanı çalışanıysa personel bilgilerine erişebilir.
+Politika 1: Bir kullanıcı yalnızca insan kaynakları  çalışanıysa personel bilgilerine erişebilir.
 
 Politika 2: Sadece yöneticiler belirli finansal verilere erişebilir.
 

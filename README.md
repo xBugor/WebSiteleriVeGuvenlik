@@ -13,7 +13,7 @@ Web sitesi,  tarayıcıdan  farklı bir kökene ( bu domain, protokol ve port ol
 
 
 
-![Cors Hata](./assets/Cors.png "GitHub")
+![](./assets/Cors.png "GitHub")
 
 
 

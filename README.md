@@ -15,11 +15,6 @@ Web sitesi,  tarayıcıdan  farklı bir kökene ( bu domain, protokol ve port ol
  "GitHub")
 
 
-
-
-
-
-
 Not: Origin, bir web sayfasının kaynağını tanımlayan bir terimdir.
 
 1.Protokol (HTTP, HTTPS)

@@ -10,7 +10,12 @@ Web sitesi,  tarayıcıdan  farklı bir kökene ( bu domain, protokol ve port ol
 
 Örnek CORS hata mesajı:
 
-![](./assets/Cors.png "GitHub")
+
+
+
+![Cors Hata](./assets/Cors.png "GitHub")
+
+
 
 
 
